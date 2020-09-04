@@ -1,8 +1,10 @@
 package com.hope.mall.mallproduct;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@MapperScan("com.hope.mall.mallproduct.dao")
 @SpringBootApplication
 public class MallProductApplication {
 
