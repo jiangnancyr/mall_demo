@@ -4,6 +4,12 @@ spring:
     password: 201103
     url: jdbc:mysql://47.114.182.154:3306/mall_ums?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.114.182.154:8848
+  application:
+    name: mall-member
 
 mybatis-plus:
   config-location:

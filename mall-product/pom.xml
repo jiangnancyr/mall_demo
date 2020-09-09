@@ -20,6 +20,12 @@
 	</properties>
 
 	<dependencies>
+		<!--<dependency>-->
+			<!--<groupId>com.aliyun.oss</groupId>-->
+			<!--<artifactId>aliyun-sdk-oss</artifactId>-->
+			<!--<version>3.10.2</version>-->
+		<!--</dependency>-->
+
 		<dependency>
 			<groupId>com.hope.mall</groupId>
 			<artifactId>mall_common</artifactId>
