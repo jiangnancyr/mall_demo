@@ -1,10 +1,12 @@
 package com.hope.mall.mallproduct.service.impl;
 
+import com.hope.mall.mallproduct.entity.CategoryBrandRelationEntity;
+import com.hope.mall.mallproduct.service.CategoryBrandRelationService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -52,6 +54,36 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         baseMapper.deleteBatchIds(longs);
     }
 
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+
+        List<Long> parent = findParent(catelogId, paths);
+        Collections.reverse(parent);
+
+        return (Long[]) parent.toArray(new Long[parent.size()]);
+    }
+
+    @Autowired(required = false)
+    CategoryBrandRelationService categoryBrandRelationService;
+
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.update();
+
+        if (!StringUtils.isEmpty(category.getName())){
+            categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
+        }
+    }
+
+    private List<Long> findParent(Long catelogId, List<Long> paths){
+        paths.add(catelogId);
+        CategoryEntity byId = this.getById(catelogId);
+        if (byId.getParentCid() != 0){
+            findParent(byId.getParentCid(), paths);
+        }
+        return paths;
+    }
     private List<CategoryEntity> getChildren(CategoryEntity categoryEntity,List<CategoryEntity> categoryEntities){
         List<CategoryEntity> collect = categoryEntities.stream()
                 .filter((entity) -> entity.getParentCid() == categoryEntity.getCatId())

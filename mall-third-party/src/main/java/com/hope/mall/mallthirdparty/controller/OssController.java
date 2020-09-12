@@ -6,6 +6,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
+import com.hope.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @create 2020-09-09 0:09
  */
 @RestController
+@RequestMapping("/thirdparty")
 public class OssController {
 
     @Autowired
@@ -36,7 +38,7 @@ public class OssController {
     String accessId;
 
     @RequestMapping("/oss/policy")
-    public Map<String, String> policy(){
+    public R policy(){
         Map<String, String> respMap = null;
         //https://mall-hope.oss-cn-shanghai.aliyuncs.com/len.jpg
         String host = "https://" + bucketName + "." + endpoint; // host的格式为 bucketname.endpoint
@@ -71,6 +73,6 @@ public class OssController {
         } finally {
             ossClient.shutdown();
         }
-        return respMap;
+        return R.ok().put("data",respMap);
     }
 }

@@ -2,6 +2,8 @@ package com.hope.mall.mallproduct;
 
 import com.hope.mall.mallproduct.entity.BrandEntity;
 import com.hope.mall.mallproduct.service.BrandService;
+import com.hope.mall.mallproduct.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,9 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 
-
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class MallProductApplicationTests {
@@ -44,5 +47,13 @@ class MallProductApplicationTests {
 //			e.printStackTrace();
 //		}
 //	}
+	@Autowired
+	CategoryService categoryService;
+	@Test
+	public void test_findPath(){
+		Long[] catelogPath = categoryService.findCatelogPath(225L);
+		log.info("完整路径：{}", Arrays.asList(catelogPath));
+
+	}
 
 }
